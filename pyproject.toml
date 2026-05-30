@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "Kard_Keeper"
+version = "0.1.0"
+description = "Gift card tracker built with Kivy"
+authors = ["Jim"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+kivy = "*"
+cython = "*"
+
+[tool.poetry.group.dev.dependencies]
+buildozer = "*"
+
+[[tool.poetry.source]]
+name = "kivy"
+url = "https://kivy.org/downloads/simple/"
+priority = "explicit"
