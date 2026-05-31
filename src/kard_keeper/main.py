@@ -39,7 +39,10 @@ class EditCardScreen(Screen):
 
 
 class RootManager(ScreenManager):
-    pass
+    home: HomeScreen = HomeScreen()
+    add_card: AddCardScreen = AddCardScreen()
+    card_detail: CardDetailScreen = CardDetailScreen()
+    edit_card: EditCardScreen = EditCardScreen()
 
 
 class KardKeeperApp(App):
