@@ -8,6 +8,8 @@ authors = ["Jim"]
 python = "^3.11"
 kivy = "*"
 cython = "*"
+tinydb = "^4.8.2"
+pydantic = "^2.13.4"
 
 [tool.poetry.group.dev.dependencies]
 buildozer = "*"

@@ -1,0 +1,183 @@
+#:kivy 2.3.0
+
+<RootManager>:
+    HomeScreen:
+        name: "home"
+    AddCardScreen:
+        name: "add_card"
+    CardDetailScreen:
+        name: "card_detail"
+    EditCardScreen:
+        name: "edit_card"
+
+
+<HomeScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text: "Gift Cards"
+                font_size: "20sp"
+
+        RecycleView:
+            id: card_list
+            viewclass: "CardListItem"
+            RecycleBoxLayout:
+                default_size: None, dp(48)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: "vertical"
+
+        Button:
+            text: "Add Card"
+            size_hint_y: None
+            height: "48dp"
+            on_press: app.go_add_card()
+
+
+<CardListItem@Button>:
+    card_name: ""
+    on_press: app.go_card_detail(root.card_name)
+
+
+<AddCardScreen>:
+    name_input: name_input
+    balance_input: balance_input
+    expires_input: expires_input
+    notes_input: notes_input
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        TextInput:
+            id: name_input
+            hint_text: "Card Name"
+
+        TextInput:
+            id: balance_input
+            hint_text: "Balance"
+            input_filter: "float"
+
+        TextInput:
+            id: expires_input
+            hint_text: "Expires (YYYY-MM-DD)"
+
+        TextInput:
+            id: notes_input
+            hint_text: "Notes"
+
+        BoxLayout:
+            size_hint_y: None
+            height: "48dp"
+            spacing: 10
+
+            Button:
+                text: "Cancel"
+                on_press: app.go_home()
+
+            Button:
+                text: "Save"
+                on_press:
+                    app.add_card_from_inputs(
+                    name_input.text,
+                    balance_input.text,
+                    expires_input.text,
+                    notes_input.text
+                    )
+
+
+<CardDetailScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: root.card_name
+            font_size: "22sp"
+
+        Label:
+            text: f"Balance: ${root.card.balance:.2f}" if root.card else ""
+
+        Label:
+            text: f"Expires: {root.card.expires}" if root.card and root.card.expires else "Expires: -"
+
+        Label:
+            text: root.card.notes if root.card and root.card.notes else ""
+
+        BoxLayout:
+            size_hint_y: None
+            height: "48dp"
+            spacing: 10
+
+            Button:
+                text: "Back"
+                on_press: app.go_home()
+
+            Button:
+                text: "Edit"
+                on_press: app.go_edit_card(root.card_name)
+
+            Button:
+                text: "Delete"
+                on_press: app.delete_card_and_back(root.card_name)
+
+
+<EditCardScreen>:
+    name_input: name_input
+    balance_input: balance_input
+    expires_input: expires_input
+    notes_input: notes_input
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        TextInput:
+            id: name_input
+            hint_text: "Card Name"
+
+        TextInput:
+            id: balance_input
+            hint_text: "Balance"
+            input_filter: "float"
+
+        TextInput:
+            id: expires_input
+            hint_text: "Expires (YYYY-MM-DD)"
+
+        TextInput:
+            id: notes_input
+            hint_text: "Notes"
+
+        BoxLayout:
+            size_hint_y: None
+            height: "48dp"
+            spacing: 10
+
+            Button:
+                text: "Cancel"
+                on_press: app.go_home()
+
+            Button:
+                text: "Save"
+                on_press:
+                    app.update_card_from_inputs(
+                    root.original_name,
+                    name_input.text,
+                    balance_input.text,
+                    expires_input.text,
+                    notes_input.text
+                    )
+
+
+RootManager:
